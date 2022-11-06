@@ -30,6 +30,8 @@
         <druid.version>1.2.14</druid.version>
         <!--        page分页插件版本-->
         <pagehelp.version>1.4.5</pagehelp.version>
+<!--        fastjson版本-->
+        <fastjson.version>1.2.78</fastjson.version>
     </properties>
 
     <parent>
@@ -94,6 +96,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+<!--        fastJson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 
