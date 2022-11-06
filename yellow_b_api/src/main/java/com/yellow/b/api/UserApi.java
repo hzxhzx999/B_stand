@@ -21,4 +21,9 @@ public class UserApi {
         userService.addUser(user,request);
         return Result.ok();
     }
+    @PostMapping("/login")
+    public Result login(@RequestBody User user){
+        String token = userService.login(user);
+        return Result.ok(token);
+    }
 }
