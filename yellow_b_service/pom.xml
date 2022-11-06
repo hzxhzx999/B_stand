@@ -17,4 +17,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+<!--        添加dao模块依赖-->
+        <dependency>
+            <groupId>com.yellow.b</groupId>
+            <artifactId>yellow_b_dao</artifactId>
+            <version>-1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>
