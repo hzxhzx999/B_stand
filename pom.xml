@@ -11,6 +11,7 @@
     <modules>
         <module>yellow_b_api</module>
         <module>yellow_b_service</module>
+        <module>yellow_b_dao</module>
     </modules>
 
     <properties>
