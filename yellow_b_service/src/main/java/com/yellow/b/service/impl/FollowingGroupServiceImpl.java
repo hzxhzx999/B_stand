@@ -12,25 +12,25 @@ import java.util.List;
 public class FollowingGroupServiceImpl implements FollowingGroupService {
     @Autowired
     private FollowingGroupDao followingGroupDao;
-
-
     @Override
     public FollowingGroup getByType(String type) {
         return followingGroupDao.getByType(type);
     }
-
     @Override
     public FollowingGroup getById(Long id) {
         return followingGroupDao.getById(id);
     }
-
     @Override
     public List<FollowingGroup> getByUserId(Long userId) {
         return followingGroupDao.getByUserId(userId);
     }
-
     @Override
     public void addFollowingGroup(FollowingGroup followingGroup) {
         followingGroupDao.addFollowingGroup(followingGroup);
+    }
+
+    @Override
+    public List<FollowingGroup> getFollowingGroups(Long userId) {
+        return followingGroupDao.getFollowingGroups(userId);
     }
 }

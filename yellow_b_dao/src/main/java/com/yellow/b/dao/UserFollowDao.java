@@ -7,10 +7,7 @@ import java.util.List;
 
 public interface UserFollowDao {
     void deleteUserFollowing(@Param("userId") Long userId, @Param("followingId") Long followingId);
-
     void addUserFollowing(UserFollowing userFollowing);
-
     List<UserFollowing> getUserFollowings(@Param("userId") Long userId);
-
     List<UserFollowing> getUserFans(Long userId);
 }

@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserFollowingServiceImpl implements UserFollowingService {
-
     @Autowired
     private UserFollowDao userFollowDao;
     @Autowired
@@ -51,7 +50,6 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         userFollowing.setUpdateIp(request.getRemoteAddr());
         userFollowDao.addUserFollowing(userFollowing);//关注用户
     }
-
     @Override
     public List<FollowingGroup> getUserFollowings(Long userId) {
         List<UserFollowing> userFollowings = userFollowDao.getUserFollowings(userId);
@@ -85,7 +83,6 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         }
         return result;
     }
-
     @Override
     public List<UserFollowing> getUserFans(Long userId) {
         List<UserFollowing> fanList = userFollowDao.getUserFans(userId);
@@ -110,7 +107,6 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         }
         return fanList;
     }
-
     @Override
     public Long addFollowingGroups(FollowingGroup followingGroup, HttpServletRequest request) {
         followingGroup.setCreateTime(new Date());
@@ -119,5 +115,9 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         followingGroup.setType(Constant.USER_FOLLOWING_GROUP_TYPE_USER);
         followingGroupService.addFollowingGroup(followingGroup);
         return followingGroup.getId();
+    }
+    @Override
+    public List<FollowingGroup> getFollowingGroups(Long userId) {
+        return followingGroupService.getFollowingGroups(userId);
     }
 }

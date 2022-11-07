@@ -10,4 +10,6 @@ public interface FollowingGroupService {
     FollowingGroup getById(Long id);
     List<FollowingGroup> getByUserId(Long userId);
     void addFollowingGroup(FollowingGroup followingGroup);
+
+    List<FollowingGroup> getFollowingGroups(Long userId);
 }

@@ -23,29 +23,39 @@ public class UserFollowingApi {
     private UserSupport userSupport;
 
     @PostMapping("/user-followings")
-    public Result addUserFollowings(@RequestBody UserFollowing userFollowing, HttpServletRequest request){
+    public Result addUserFollowings(@RequestBody UserFollowing userFollowing, HttpServletRequest request) {
         Long currentUserId = userSupport.getCurrentUserId();
         userFollowing.setUserId(currentUserId);
-        userFollowingService.addUserFollowing(userFollowing,request);
+        userFollowingService.addUserFollowing(userFollowing, request);
         return Result.ok();
     }
+
     @GetMapping("/user-followings")
-    public Result getUserFollowings(){
+    public Result getUserFollowings() {
         Long currentUserId = userSupport.getCurrentUserId();
         List<FollowingGroup> result = userFollowingService.getUserFollowings(currentUserId);
         return Result.ok(result);
     }
+
     @GetMapping("user-fans")
-    public Result getUserFans(){
+    public Result getUserFans() {
         Long currentUserId = userSupport.getCurrentUserId();
         List<UserFollowing> userFans = userFollowingService.getUserFans(currentUserId);
         return Result.ok(userFans);
     }
+
     @PostMapping("/user-following-group")
-    public Result addUserFollowingGroups(@RequestBody FollowingGroup followingGroup, HttpServletRequest request){
+    public Result addUserFollowingGroups(@RequestBody FollowingGroup followingGroup, HttpServletRequest request) {
         Long currentUserId = userSupport.getCurrentUserId();
         followingGroup.setUserId(currentUserId);
-        Long groupId = userFollowingService.addFollowingGroups(followingGroup,request);
+        Long groupId = userFollowingService.addFollowingGroups(followingGroup, request);
         return Result.ok(groupId);
+    }
+
+    @GetMapping("/user-following-groups")
+    public Result getFollowingGroup() {
+        Long userId = userSupport.getCurrentUserId();
+        List<FollowingGroup> list = userFollowingService.getFollowingGroups(userId);
+        return Result.ok(list);
     }
 }

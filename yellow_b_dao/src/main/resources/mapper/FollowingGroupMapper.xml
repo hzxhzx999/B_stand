@@ -18,4 +18,8 @@
         user_id,`name`,`type`,create_time,update_time,update_ip
         ) values(#{userId},#{name},#{type},#{createTime},#{updateTime},#{updateIp})
     </insert>
+    <select id="getFollowingGroups" parameterType="long" resultType="com.yellow.b.domain.FollowingGroup">
+        select * from t_following_group
+        where user_id = #{userId}
+    </select>
 </mapper>

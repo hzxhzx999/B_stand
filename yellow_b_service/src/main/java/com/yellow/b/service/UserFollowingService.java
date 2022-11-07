@@ -11,4 +11,5 @@ public interface UserFollowingService {
     List<FollowingGroup> getUserFollowings(Long userId);
     List<UserFollowing> getUserFans(Long userId);
     Long addFollowingGroups(FollowingGroup followingGroup, HttpServletRequest request);
+    List<FollowingGroup> getFollowingGroups(Long userId);
 }
