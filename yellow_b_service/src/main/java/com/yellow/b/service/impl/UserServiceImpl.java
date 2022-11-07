@@ -72,6 +72,11 @@ public class UserServiceImpl implements UserService {
         return TokenUtils.getToken(userByPhone.getId());
     }
 
+    @Override
+    public User getUserInfo(Long currentUserId) {
+        return null;
+    }
+
     public User getUserByPhone(String phone) {
         return userDao.getUserByPhone(phone);
     }

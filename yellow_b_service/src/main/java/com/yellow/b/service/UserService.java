@@ -8,4 +8,6 @@ public interface UserService {
     void addUser(User user, HttpServletRequest request);
 
     String login(User user);
+
+    User getUserInfo(Long currentUserId);
 }
