@@ -80,6 +80,22 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    @Transactional
+    public void updateUserInfos(UserInfo userInfo,HttpServletRequest request) {
+        userInfo.setUpdateTime(new Date());
+        userInfo.setUpdateIp(request.getRemoteAddr());
+        userDao.updateUserInfos(userInfo);
+    }
+
+    @Override
+    @Transactional
+    public void updateUsers(User user, HttpServletRequest request) {
+        user.setUpdateTime(new Date());
+        user.setUpdateIp(request.getRemoteAddr());
+        userDao.updateUsers(user);
+    }
+
     public User getUserByPhone(String phone) {
         return userDao.getUserByPhone(phone);
     }

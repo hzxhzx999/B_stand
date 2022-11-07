@@ -3,10 +3,12 @@ package com.yellow.b.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Result {
     private String code;
     private String msg;
@@ -19,6 +21,7 @@ public class Result {
     public Result(String code, String msg,Object data) {
         this.code = code;
         this.msg = msg;
+        this.result = data;
     }
 
     public static Result ok(){

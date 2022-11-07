@@ -14,4 +14,8 @@ public interface UserDao {
     User getUserByUserUd(@Param("userId") Long currentUserId);
 
     UserInfo getUserInfoByUserInfoId(@Param("userId") Long currentUserId);
+
+    void updateUserInfos(UserInfo userInfo);
+
+    void updateUsers(User user);
 }

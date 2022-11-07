@@ -27,4 +27,23 @@
         from t_user_info
         where user_id = #{userId}
     </select>
+    <update id="updateUsers" parameterType="com.yellow.b.domain.User">
+        update t_user
+        set phone = #{phone},
+        email = #{email},
+        update_ip = #{updateIp},
+        update_time = #{updateTime}
+        where id = #{id}
+    </update>
+    <update id="updateUserInfos" parameterType="com.yellow.b.domain.UserInfo">
+        update t_user_info
+        set nickname = #{nickname},
+        avatar = #{avatar},
+        sign = #{sign},
+        gender = #{gender},
+        birth = #{birth},
+        update_ip = #{updateIp},
+        update_time = #{updateTime}
+        where user_id = #{userId}
+    </update>
 </mapper>
