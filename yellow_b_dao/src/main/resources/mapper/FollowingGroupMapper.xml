@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellow.b.dao.FollowingGroupDao">
+    <select id="getByType" parameterType="string" resultType="com.yellow.b.domain.FollowingGroup">
+        select * from t_following_group where `type` = #{type}
+    </select>
+    <select id="getById" parameterType="long" resultType="com.yellow.b.domain.FollowingGroup">
+        select * from t_user_following where `id` = #{id}
+    </select>
+</mapper>

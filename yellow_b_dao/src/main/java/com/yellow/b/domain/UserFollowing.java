@@ -10,8 +10,8 @@ import java.util.Date;
 public class UserFollowing {
     private Long id;
     private Long userId;
-    private Integer followingId;
-    private Integer groupId;
+    private Long followingId;
+    private Long groupId;
     private Date createTime;
     private Date updateTime;
     private String updateIp;
