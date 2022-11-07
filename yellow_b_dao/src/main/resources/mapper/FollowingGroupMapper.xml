@@ -7,7 +7,7 @@
         select * from t_following_group where `type` = #{type}
     </select>
     <select id="getById" parameterType="long" resultType="com.yellow.b.domain.FollowingGroup">
-        select * from t_user_following where `id` = #{id}
+        select * from t_following_group where `id` = #{id}
     </select>
     <select id="getByUserId" parameterType="long" resultType="com.yellow.b.domain.FollowingGroup">
         select * from t_following_group
