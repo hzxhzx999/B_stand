@@ -6,6 +6,8 @@ import com.yellow.b.service.FollowingGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FollowingGroupServiceImpl implements FollowingGroupService {
     @Autowired
@@ -20,5 +22,10 @@ public class FollowingGroupServiceImpl implements FollowingGroupService {
     @Override
     public FollowingGroup getById(Long id) {
         return followingGroupDao.getById(id);
+    }
+
+    @Override
+    public List<FollowingGroup> getByUserId(Long userId) {
+        return followingGroupDao.getByUserId(userId);
     }
 }

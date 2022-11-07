@@ -46,4 +46,16 @@
         update_time = #{updateTime}
         where user_id = #{userId}
     </update>
+    <select id="getUserInfoByUserIds" resultType="com.yellow.b.domain.UserInfo">
+        select *
+        from t_user_info
+        <where>
+            <if test="collect != null and collect.size > 0">
+                user_id in
+                <foreach collection="collect" item="userId" open="(" close=")" separator=",">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

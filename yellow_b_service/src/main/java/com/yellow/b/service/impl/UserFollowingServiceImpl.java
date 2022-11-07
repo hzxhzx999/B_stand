@@ -1,10 +1,7 @@
 package com.yellow.b.service.impl;
 
 import com.yellow.b.dao.UserFollowDao;
-import com.yellow.b.domain.Constant;
-import com.yellow.b.domain.FollowingGroup;
-import com.yellow.b.domain.User;
-import com.yellow.b.domain.UserFollowing;
+import com.yellow.b.domain.*;
 import com.yellow.b.exception.ConditionException;
 import com.yellow.b.service.FollowingGroupService;
 import com.yellow.b.service.UserFollowingService;
@@ -15,7 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserFollowingServiceImpl implements UserFollowingService {
@@ -49,5 +50,39 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         userFollowing.setUpdateTime(new Date());
         userFollowing.setUpdateIp(request.getRemoteAddr());
         userFollowDao.addUserFollowing(userFollowing);//关注用户
+    }
+
+    @Override
+    public List<FollowingGroup> getUserFollowings(Long userId) {
+        List<UserFollowing> userFollowings = userFollowDao.getUserFollowings(userId);
+        Set<Long> collect = userFollowings.stream().map(UserFollowing::getFollowingId).collect(Collectors.toSet());
+        List<UserInfo> userInfoList = new ArrayList<>();
+        if(collect.size()>0){
+            userInfoList = userService.getUserInfoByUserIds(collect);
+        }
+        for (UserFollowing userFollowing : userFollowings) {
+            for (UserInfo userInfo : userInfoList) {
+                if(userFollowing.getFollowingId().equals(userInfo.getUserId())){
+                    userFollowing.setUserInfo(userInfo);
+                }
+            }
+        }
+        List<FollowingGroup> groupList = followingGroupService.getByUserId(userId);
+        FollowingGroup allGroup = new FollowingGroup();
+        allGroup.setName(Constant.USER_FOLLOWING_GROUP_ALL_NAME);
+        allGroup.setFollowingUserInfoList(userInfoList);
+        List<FollowingGroup> result  = new ArrayList<>();
+        result.add(allGroup);
+        for (FollowingGroup followingGroup : groupList) {
+            List<UserInfo> userInfos  = new ArrayList<>();
+            for (UserFollowing userFollowing : userFollowings) {
+                if(followingGroup.getId().equals(userFollowing.getGroupId())){
+                    userInfos.add(userFollowing.getUserInfo());
+                }
+            }
+            followingGroup.setFollowingUserInfoList(userInfos);
+            result.add(followingGroup);
+        }
+        return result;
     }
 }

@@ -4,6 +4,9 @@ import com.yellow.b.domain.User;
 import com.yellow.b.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Set;
+
 public interface UserDao {
     User getUserByPhone(@Param("phone") String phone);
 
@@ -18,4 +21,6 @@ public interface UserDao {
     void updateUserInfos(UserInfo userInfo);
 
     void updateUsers(User user);
+
+    List<UserInfo> getUserInfoByUserIds(Set<Long> collect);
 }

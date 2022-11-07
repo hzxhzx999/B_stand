@@ -7,4 +7,5 @@ public class Constant {
     public final static String GENDER_BIRTH = "1970-1-1";
     public final static String GENDER_NICK = "小白";
     public final static String USER_FOLLOWING_GROUP_TYPE_DEFAULT = "2";
+    public final static String USER_FOLLOWING_GROUP_ALL_NAME = "全部关注";
 }

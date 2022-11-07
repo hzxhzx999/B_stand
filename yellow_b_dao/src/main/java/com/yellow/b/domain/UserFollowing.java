@@ -15,4 +15,5 @@ public class UserFollowing {
     private Date createTime;
     private Date updateTime;
     private String updateIp;
+    private UserInfo userInfo;
 }

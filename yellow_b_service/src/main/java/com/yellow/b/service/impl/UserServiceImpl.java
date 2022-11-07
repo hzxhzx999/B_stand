@@ -17,6 +17,8 @@ import org.springframework.util.DigestUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -99,6 +101,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByid(Long followingId) {
         return userDao.getUserById(followingId);
+    }
+
+    @Override
+    public List<UserInfo> getUserInfoByUserIds(Set<Long> collect) {
+        return userDao.getUserInfoByUserIds(collect);
     }
 
     public User getUserByPhone(String phone) {

@@ -4,6 +4,8 @@ import com.yellow.b.domain.User;
 import com.yellow.b.domain.UserInfo;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Set;
 
 public interface UserService {
     void addUser(User user, HttpServletRequest request);
@@ -17,4 +19,6 @@ public interface UserService {
     void updateUsers(User user, HttpServletRequest request);
 
     User getUserByid(Long followingId);
+
+    List<UserInfo> getUserInfoByUserIds(Set<Long> collect);
 }

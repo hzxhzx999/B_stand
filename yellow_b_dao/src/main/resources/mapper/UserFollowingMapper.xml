@@ -11,4 +11,8 @@
         insert into t_user_following(user_id,following_id,group_id,create_time,update_time,update_ip)
         values(#{userId},#{followingId},#{groupId},#{createTime},#{updateTime},#{updateIp})
     </insert>
+    <select id="getUserFollowings" parameterType="long" resultType="com.yellow.b.domain.UserFollowing">
+        select * from t_user_following
+        where user_id = #{userId}
+    </select>
 </mapper>
