@@ -25,7 +25,7 @@ public class RocketMqConfig {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    @Bean
+    @Bean(value = "momentProducer")
     public DefaultMQProducer momentsProducer(){ //生产者
         DefaultMQProducer producer = new DefaultMQProducer(UserMomentsConstant.GROUP_MOMENTS);
         producer.setNamesrvAddr(nameServerAddress);
@@ -36,7 +36,7 @@ public class RocketMqConfig {
             throw new RuntimeException(e);
         }
     }
-    @Bean
+    @Bean(value = "momentConsumer")
     public DefaultMQPushConsumer momentsPushConsumer(){//消费者
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(UserMomentsConstant.GROUP_MOMENTS);
         consumer.setNamesrvAddr(nameServerAddress);

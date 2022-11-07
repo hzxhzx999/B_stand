@@ -8,10 +8,12 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @Configuration
 @MapperScan("com.yellow.b.dao")
+@EnableTransactionManagement
 public class HttpMessageCoverConfig {
 
     @Bean
