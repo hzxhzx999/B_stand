@@ -74,7 +74,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserInfo(Long currentUserId) {
-        return null;
+        User user = userDao.getUserByUserUd(currentUserId);
+        UserInfo userInfo = userDao.getUserInfoByUserInfoId(currentUserId);
+        user.setUserInfo(userInfo);
+        return user;
     }
 
     public User getUserByPhone(String phone) {

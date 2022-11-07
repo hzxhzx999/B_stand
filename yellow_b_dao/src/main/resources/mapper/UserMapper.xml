@@ -17,4 +17,14 @@
         t_user_info(user_id,nickname,avatar,sign,birth,gender,create_time,update_time,update_ip)
         values(#{userId},#{nickname},#{avatar},#{sign},#{birth},#{gender},#{createTime},#{updateTime},#{updateIp})
     </insert>
+    <select id="getUserByUserUd" parameterType="long" resultType="com.yellow.b.domain.User">
+        select *
+        from t_user
+        where id = #{userId}
+    </select>
+    <select id="getUserInfoByUserInfoId" parameterType="long" resultType="com.yellow.b.domain.UserInfo">
+        select *
+        from t_user_info
+        where user_id = #{userId}
+    </select>
 </mapper>
