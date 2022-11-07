@@ -34,6 +34,8 @@
         <fastjson.version>1.2.78</fastjson.version>
         <!--        jwt版本-->
         <jwt.version>4.0.0</jwt.version>
+        <!--        rocketmq版本-->
+        <mq.version>2.2.2</mq.version>
     </properties>
 
     <parent>
@@ -110,6 +112,17 @@
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>${jwt.version}</version>
+        </dependency>
+        <!--        rocketmq-->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>${mq.version}</version>
+        </dependency>
+        <!--        redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 
