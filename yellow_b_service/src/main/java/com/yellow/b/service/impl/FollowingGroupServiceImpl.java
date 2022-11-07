@@ -28,4 +28,9 @@ public class FollowingGroupServiceImpl implements FollowingGroupService {
     public List<FollowingGroup> getByUserId(Long userId) {
         return followingGroupDao.getByUserId(userId);
     }
+
+    @Override
+    public void addFollowingGroup(FollowingGroup followingGroup) {
+        followingGroupDao.addFollowingGroup(followingGroup);
+    }
 }

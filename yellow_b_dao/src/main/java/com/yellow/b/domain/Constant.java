@@ -8,4 +8,5 @@ public class Constant {
     public final static String GENDER_NICK = "小白";
     public final static String USER_FOLLOWING_GROUP_TYPE_DEFAULT = "2";
     public final static String USER_FOLLOWING_GROUP_ALL_NAME = "全部关注";
+    public final static String USER_FOLLOWING_GROUP_TYPE_USER = "3";
 }

@@ -8,6 +8,6 @@ public interface FollowingGroupService {
 
     FollowingGroup getByType(String type);
     FollowingGroup getById(Long id);
-
     List<FollowingGroup> getByUserId(Long userId);
+    void addFollowingGroup(FollowingGroup followingGroup);
 }

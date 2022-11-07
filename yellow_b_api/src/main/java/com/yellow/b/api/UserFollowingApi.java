@@ -41,4 +41,11 @@ public class UserFollowingApi {
         List<UserFollowing> userFans = userFollowingService.getUserFans(currentUserId);
         return Result.ok(userFans);
     }
+    @PostMapping("/user-following-group")
+    public Result addUserFollowingGroups(@RequestBody FollowingGroup followingGroup, HttpServletRequest request){
+        Long currentUserId = userSupport.getCurrentUserId();
+        followingGroup.setUserId(currentUserId);
+        Long groupId = userFollowingService.addFollowingGroups(followingGroup,request);
+        return Result.ok(groupId);
+    }
 }

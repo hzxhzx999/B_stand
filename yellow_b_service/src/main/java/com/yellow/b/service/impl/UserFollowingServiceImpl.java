@@ -110,4 +110,14 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         }
         return fanList;
     }
+
+    @Override
+    public Long addFollowingGroups(FollowingGroup followingGroup, HttpServletRequest request) {
+        followingGroup.setCreateTime(new Date());
+        followingGroup.setUpdateIp(request.getRemoteAddr());
+        followingGroup.setUpdateTime(new Date());
+        followingGroup.setType(Constant.USER_FOLLOWING_GROUP_TYPE_USER);
+        followingGroupService.addFollowingGroup(followingGroup);
+        return followingGroup.getId();
+    }
 }
