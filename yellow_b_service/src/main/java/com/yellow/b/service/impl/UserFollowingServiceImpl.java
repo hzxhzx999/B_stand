@@ -42,10 +42,10 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         }
         Long followingId = userFollowing.getFollowingId();//获取关注id
         User userById = userService.getUserByid(followingId);//获取用户
-        if(userById==null){//如果用户不存在
+        if (userById == null) {//如果用户不存在
             throw new CodecException("关注的用户不存在!");
         }//如果存在将原有的分组删除
-        userFollowDao.deleteUserFollowing(userFollowing.getUserId(),followingId);
+        userFollowDao.deleteUserFollowing(userFollowing.getUserId(), followingId);
         userFollowing.setCreateTime(new Date());
         userFollowing.setUpdateTime(new Date());
         userFollowing.setUpdateIp(request.getRemoteAddr());
@@ -57,12 +57,12 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         List<UserFollowing> userFollowings = userFollowDao.getUserFollowings(userId);
         Set<Long> collect = userFollowings.stream().map(UserFollowing::getFollowingId).collect(Collectors.toSet());
         List<UserInfo> userInfoList = new ArrayList<>();
-        if(collect.size()>0){
+        if (collect.size() > 0) {
             userInfoList = userService.getUserInfoByUserIds(collect);
         }
         for (UserFollowing userFollowing : userFollowings) {
             for (UserInfo userInfo : userInfoList) {
-                if(userFollowing.getFollowingId().equals(userInfo.getUserId())){
+                if (userFollowing.getFollowingId().equals(userInfo.getUserId())) {
                     userFollowing.setUserInfo(userInfo);
                 }
             }
@@ -71,12 +71,12 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         FollowingGroup allGroup = new FollowingGroup();
         allGroup.setName(Constant.USER_FOLLOWING_GROUP_ALL_NAME);
         allGroup.setFollowingUserInfoList(userInfoList);
-        List<FollowingGroup> result  = new ArrayList<>();
+        List<FollowingGroup> result = new ArrayList<>();
         result.add(allGroup);
         for (FollowingGroup followingGroup : groupList) {
-            List<UserInfo> userInfos  = new ArrayList<>();
+            List<UserInfo> userInfos = new ArrayList<>();
             for (UserFollowing userFollowing : userFollowings) {
-                if(followingGroup.getId().equals(userFollowing.getGroupId())){
+                if (followingGroup.getId().equals(userFollowing.getGroupId())) {
                     userInfos.add(userFollowing.getUserInfo());
                 }
             }
@@ -84,5 +84,30 @@ public class UserFollowingServiceImpl implements UserFollowingService {
             result.add(followingGroup);
         }
         return result;
+    }
+
+    @Override
+    public List<UserFollowing> getUserFans(Long userId) {
+        List<UserFollowing> fanList = userFollowDao.getUserFans(userId);
+        Set<Long> fanIsSet = fanList.stream().map(UserFollowing::getUserId).collect(Collectors.toSet());
+        List<UserInfo> userInfoList = new ArrayList<>();
+        if (fanIsSet.size() > 0) {
+            userInfoList = userService.getUserInfoByUserIds(fanIsSet);
+        }
+        List<UserFollowing> followingList = userFollowDao.getUserFollowings(userId);
+        for (UserFollowing fan : fanList) {
+            for (UserInfo userInfo : userInfoList) {
+                if (fan.getUserId().equals(userInfo.getUserId())) {
+                    userInfo.setFollowed(false);
+                    fan.setUserInfo(userInfo);
+                }
+            }
+            for (UserFollowing following : followingList) {
+                if (following.getFollowingId().equals(fan.getUserId())) {
+                    fan.getUserInfo().setFollowed(true);
+                }
+            }
+        }
+        return fanList;
     }
 }

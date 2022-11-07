@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserFollowingService {
     void addUserFollowing(UserFollowing userFollowing, HttpServletRequest request);
     List<FollowingGroup> getUserFollowings(Long userId);
+    List<UserFollowing> getUserFans(Long userId);
 }

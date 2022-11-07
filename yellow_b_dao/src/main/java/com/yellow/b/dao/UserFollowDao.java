@@ -11,4 +11,6 @@ public interface UserFollowDao {
     void addUserFollowing(UserFollowing userFollowing);
 
     List<UserFollowing> getUserFollowings(@Param("userId") Long userId);
+
+    List<UserFollowing> getUserFans(Long userId);
 }
