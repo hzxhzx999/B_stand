@@ -1,5 +1,6 @@
 package com.yellow.b.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yellow.b.domain.User;
 import com.yellow.b.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +24,6 @@ public interface UserDao {
     void updateUsers(User user);
 
     List<UserInfo> getUserInfoByUserIds(Set<Long> collect);
+
+    List<UserInfo> pageListUserInfos(JSONObject params);
 }

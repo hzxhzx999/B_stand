@@ -1,5 +1,7 @@
 package com.yellow.b.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.yellow.b.domain.PageResult;
 import com.yellow.b.domain.User;
 import com.yellow.b.domain.UserInfo;
 
@@ -21,4 +23,6 @@ public interface UserService {
     User getUserByid(Long followingId);
 
     List<UserInfo> getUserInfoByUserIds(Set<Long> collect);
+
+    PageResult<UserInfo> pageListUserInfo(JSONObject params);
 }

@@ -50,6 +50,7 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         userFollowing.setUpdateIp(request.getRemoteAddr());
         userFollowDao.addUserFollowing(userFollowing);//关注用户
     }
+
     @Override
     public List<FollowingGroup> getUserFollowings(Long userId) {
         List<UserFollowing> userFollowings = userFollowDao.getUserFollowings(userId);
@@ -83,6 +84,7 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         }
         return result;
     }
+
     @Override
     public List<UserFollowing> getUserFans(Long userId) {
         List<UserFollowing> fanList = userFollowDao.getUserFans(userId);
@@ -107,6 +109,7 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         }
         return fanList;
     }
+
     @Override
     public Long addFollowingGroups(FollowingGroup followingGroup, HttpServletRequest request) {
         followingGroup.setCreateTime(new Date());
@@ -116,8 +119,23 @@ public class UserFollowingServiceImpl implements UserFollowingService {
         followingGroupService.addFollowingGroup(followingGroup);
         return followingGroup.getId();
     }
+
     @Override
     public List<FollowingGroup> getFollowingGroups(Long userId) {
         return followingGroupService.getFollowingGroups(userId);
+    }
+
+    @Override
+    public List<UserInfo> checkFollowingStatus(List<UserInfo> userInfoList, Long userId) {
+        List<UserFollowing> userFollowingList = userFollowDao.getUserFollowings(userId);
+        for (UserInfo userInfo : userInfoList) {
+            userInfo.setFollowed(false);
+            for (UserFollowing following : userFollowingList) {
+                if (following.getFollowingId().equals(userInfo.getUserId())) {
+                    userInfo.setFollowed(true);
+                }
+            }
+        }
+        return userInfoList;
     }
 }

@@ -1,9 +1,13 @@
 package com.yellow.b.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mysql.cj.util.StringUtils;
 import com.yellow.b.dao.UserDao;
 import com.yellow.b.domain.Constant;
+import com.yellow.b.domain.PageResult;
 import com.yellow.b.domain.User;
 import com.yellow.b.domain.UserInfo;
 import com.yellow.b.exception.ConditionException;
@@ -67,8 +71,8 @@ public class UserServiceImpl implements UserService {
         if (userByPhone == null) {
             throw new ConditionException("用户不存在!");
         }
-        String pwd = DigestUtils.md5DigestAsHex((user.getPassword()+userByPhone.getSalt()).getBytes(StandardCharsets.UTF_8));
-        if(!pwd.equals(userByPhone.getPassword())){
+        String pwd = DigestUtils.md5DigestAsHex((user.getPassword() + userByPhone.getSalt()).getBytes(StandardCharsets.UTF_8));
+        if (!pwd.equals(userByPhone.getPassword())) {
             throw new ConditionException("密码错误!");
         }
         return TokenUtils.getToken(userByPhone.getId());
@@ -84,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUserInfos(UserInfo userInfo,HttpServletRequest request) {
+    public void updateUserInfos(UserInfo userInfo, HttpServletRequest request) {
         userInfo.setUpdateTime(new Date());
         userInfo.setUpdateIp(request.getRemoteAddr());
         userDao.updateUserInfos(userInfo);
@@ -106,6 +110,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserInfo> getUserInfoByUserIds(Set<Long> collect) {
         return userDao.getUserInfoByUserIds(collect);
+    }
+
+    @Override
+    public PageResult<UserInfo> pageListUserInfo(JSONObject params) {
+        Integer currentPage = params.getInteger("currentPage");
+        Integer pageSize = params.getInteger("pageSize");
+        PageHelper.startPage(currentPage, pageSize);
+        List<UserInfo> list = userDao.pageListUserInfos(params);
+        PageInfo<UserInfo> pageInfo = new PageInfo<>(list);
+        return new PageResult<UserInfo>(pageInfo.getTotal(),list);
     }
 
     public User getUserByPhone(String phone) {

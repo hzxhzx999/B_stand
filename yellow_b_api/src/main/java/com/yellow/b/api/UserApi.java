@@ -1,14 +1,19 @@
 package com.yellow.b.api;
 
+import com.alibaba.fastjson.JSONObject;
+import com.yellow.b.domain.PageResult;
 import com.yellow.b.domain.Result;
 import com.yellow.b.domain.User;
 import com.yellow.b.domain.UserInfo;
+import com.yellow.b.service.UserFollowingService;
 import com.yellow.b.service.UserService;
 import com.yellow.b.support.UserSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 @RestController
 public class UserApi {
 
@@ -16,6 +21,8 @@ public class UserApi {
     private UserService userService;
     @Autowired
     private UserSupport userSupport;
+    @Autowired
+    private UserFollowingService userFollowingService;
 
     @GetMapping("/users")
     public Result getUserId(){
@@ -47,5 +54,20 @@ public class UserApi {
         userInfo.setUserId(currentUserId);
         userService.updateUserInfos(userInfo,request);
         return Result.ok();
+    }
+    @GetMapping("/user-infos")
+    public Result getUserInfo(@RequestParam Integer currentPage,@RequestParam Integer pageSize,String nickname){
+        Long userId = userSupport.getCurrentUserId();
+        JSONObject params = new JSONObject();
+        params.put("currentPage",currentPage);
+        params.put("pageSize",pageSize);
+        params.put("nickname",pageSize);
+        params.put("userId",userId);
+        PageResult<UserInfo> result =userService.pageListUserInfo(params);
+        if(result.getTotal()>0){
+            List<UserInfo> checkedUserInfoList = userFollowingService.checkFollowingStatus(result.getList(),userId);
+            result.setList(checkedUserInfoList);
+        }
+        return Result.ok(result);
     }
 }
