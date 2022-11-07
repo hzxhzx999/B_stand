@@ -15,4 +15,6 @@ public interface UserService {
     void updateUserInfos(UserInfo userInfo,HttpServletRequest request);
 
     void updateUsers(User user, HttpServletRequest request);
+
+    User getUserByid(Long followingId);
 }

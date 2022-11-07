@@ -11,7 +11,7 @@ public interface UserDao {
 
     void addUserInfo(UserInfo userInfo);
 
-    User getUserByUserUd(@Param("userId") Long currentUserId);
+    User getUserById(@Param("id") Long currentUserId);
 
     UserInfo getUserInfoByUserInfoId(@Param("userId") Long currentUserId);
 

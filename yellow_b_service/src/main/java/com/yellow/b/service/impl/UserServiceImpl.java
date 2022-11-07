@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserInfo(Long currentUserId) {
-        User user = userDao.getUserByUserUd(currentUserId);
+        User user = userDao.getUserById(currentUserId);
         UserInfo userInfo = userDao.getUserInfoByUserInfoId(currentUserId);
         user.setUserInfo(userInfo);
         return user;
@@ -94,6 +94,11 @@ public class UserServiceImpl implements UserService {
         user.setUpdateTime(new Date());
         user.setUpdateIp(request.getRemoteAddr());
         userDao.updateUsers(user);
+    }
+
+    @Override
+    public User getUserByid(Long followingId) {
+        return userDao.getUserById(followingId);
     }
 
     public User getUserByPhone(String phone) {

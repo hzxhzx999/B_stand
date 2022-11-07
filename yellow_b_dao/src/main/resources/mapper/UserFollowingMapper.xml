@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellow.b.dao.UserFollowDao">
+    <delete id="deleteUserFollowing">
+        delete from t_user_following
+        where user_id = #{userId} and following_id = #{followingId}
+    </delete>
+    <insert id="addUserFollowing" parameterType="com.yellow.b.domain.UserFollowing">
+        insert into t_user_following(user_id,following_id,group_id,create_time,update_time,update_ip)
+        values(#{userId},#{followingId},#{groupId},#{createTime},#{updateTime},#{updateIp})
+    </insert>
+</mapper>
