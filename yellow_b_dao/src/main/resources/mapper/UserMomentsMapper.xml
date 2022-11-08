@@ -5,7 +5,7 @@
 <mapper namespace="com.yellow.b.dao.UserMomentsDao">
     <insert id="addUserMoments" parameterType="com.yellow.b.domain.UserMoments" useGeneratedKeys="true" keyColumn="id"
             keyProperty="id">
-        insert into t_user_moments(user_id,`type`,content_id,create_time,update_time,update_ip)
+        insert into t_user_moments(user_id,`type`,contentId,create_time,update_time,update_ip)
         values(#{userId},#{type},#{contentId},#{createTime},#{updateTime},#{updateIp})
     </insert>
 </mapper>
