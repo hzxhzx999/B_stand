@@ -1,6 +1,11 @@
 package com.yellow.b.config;
 
+import com.alibaba.fastjson.JSONObject;
+import com.mysql.cj.util.StringUtils;
+import com.yellow.b.domain.UserFollowing;
+import com.yellow.b.domain.UserMoments;
 import com.yellow.b.domain.UserMomentsConstant;
+import com.yellow.b.service.UserFollowingService;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -14,13 +19,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class RocketMqConfig {
 
     @Value("${rocketmq.name.server.address}")
     private String nameServerAddress;
+    @Autowired
+    private UserFollowingService userFollowingService;
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
@@ -45,8 +54,25 @@ public class RocketMqConfig {
             consumer.registerMessageListener(new MessageListenerConcurrently() {
                 @Override
                 public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-                    for (MessageExt messageExt : list) {
-                        System.out.println(messageExt);
+                    MessageExt messageExt = list.get(0);
+                    if(messageExt==null){
+                        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                    }
+                    String s = new String(messageExt.getBody());
+                    UserMoments userMoments = JSONObject.toJavaObject(JSONObject.parseObject(s), UserMoments.class);
+                    Long userId = userMoments.getUserId();
+                    List<UserFollowing> userFans = userFollowingService.getUserFans(userId);
+                    for (UserFollowing userFan : userFans) {
+                        String key = "sub"+userFan.getUserId();
+                        String subList = redisTemplate.opsForValue().get(key);
+                        List<UserMoments> subMomentList;
+                        if(StringUtils.isNullOrEmpty(subList)){
+                                subMomentList = new ArrayList<>();
+                        }else{
+                            subMomentList = JSONObject.parseArray(subList,UserMoments.class);
+                        }
+                        subMomentList.add(userMoments);
+                        redisTemplate.opsForValue().set(key,JSONObject.toJSONString(subMomentList),2, TimeUnit.DAYS);
                     }
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }
