@@ -1,5 +1,6 @@
 package com.yellow.b.config;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mysql.cj.util.StringUtils;
 import com.yellow.b.domain.UserFollowing;
@@ -69,7 +70,7 @@ public class RocketMqConfig {
                         if(StringUtils.isNullOrEmpty(subList)){
                                 subMomentList = new ArrayList<>();
                         }else{
-                            subMomentList = JSONObject.parseArray(subList,UserMoments.class);
+                            subMomentList = JSONArray.parseArray(subList,UserMoments.class);
                         }
                         subMomentList.add(userMoments);
                         redisTemplate.opsForValue().set(key,JSONObject.toJSONString(subMomentList),2, TimeUnit.DAYS);
